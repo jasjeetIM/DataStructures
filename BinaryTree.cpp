@@ -40,9 +40,9 @@ public:
 template <class T, class K>
 Node<T,K>::Node()
 {
-    key = nullptr;
-    data = nullptr;
-    l_ptr = r_ptr = nullptr;
+    key = NULL;
+    data = NULL;
+    l_ptr = r_ptr = NULL;
 }
 
 template <class T, class K>
@@ -50,15 +50,15 @@ Node<T,K>:: Node(T ke, K dat)
 {
     key = ke;
     data = dat;
-    l_ptr = r_ptr = nullptr;
+    l_ptr = r_ptr = NULL;
 }
 
 template <class T, class K>
 Node <T,K> :: Node (T ke)
 {
     key = ke;
-    data = nullptr;
-    l_ptr = r_ptr = nullptr;
+    data = NULL;
+    l_ptr = r_ptr = NULL;
 }
 
 template <class T, class K>
@@ -137,6 +137,7 @@ public:
     bool insertNode(Node<T,K>* node);
     bool insertNode (T key, K data);
     void deleteNode (T key);
+    void clearTree(Node<T,K> * node);
     Node<T,K> * findNode(T key);
     void printData (Node<T,K>* node);
     void printSubTree(Node<T,K>*node);
@@ -149,13 +150,13 @@ private:
 template <class T, class K>
 BinaryTree<T,K>:: BinaryTree()
 {
-    root = nullptr;
+    root = NULL;
 }
 
 template<class T, class K>
-BinaryTree<T,K>:: BinaryTree(Node<T,K>*arr, int size)
+BinaryTree<T,K>:: BinaryTree(T *arr, int size)
 {
-    Node<T,K> ** nodes = new Nodes<T,K> *[size];
+    Node<T,K> ** nodes = new Node<T,K> *[size];
     root = new Node<T,K>(arr[0]);
     nodes[0] = root;
 
@@ -182,9 +183,9 @@ BinaryTree<T,K>::~BinaryTree()
 template <class T, class K>
 void BinaryTree<T,K>:: clearTree(Node<T,K>* node)
 {
-    if (node == nullptr) return;
-     if (node->getLeft() != nullptr) clearTree(node->getLeft());
-     if (node->getRight() != nullptr) clearTree(node->getRight());
+    if (node == NULL) return;
+     if (node->getLeft() != NULL) clearTree(node->getLeft());
+     if (node->getRight() != NULL) clearTree(node->getRight());
      delete node;
 }
 
@@ -194,16 +195,16 @@ bool BinaryTree<T,K>:: insertNode(Node<T,K> * node)
     Node<T,K> * temp, * backNode;
     temp = root;
 
-    while (temp!=nullptr)
+    while (temp!=NULL)
     {
         backNode = temp;
         if (node->getKey()<= temp->getKey())
             temp = temp->getLeft();
-        else if (node->getKey() >= temp-getKey() )
+        else if (node->getKey() >= temp->getKey() )
             temp = temp->getRight();
     }
 
-    if (backNode == nullptr)
+    if (backNode == NULL)
     {
         root = node;
         return true;
@@ -235,14 +236,14 @@ void BinaryTree<T,K>:: deleteNode(T ke)
 
     temp = root;
 
-    while (temp!= nullptr && temp->getKey() != ke)
+    while (temp!= NULL && temp->getKey() != ke)
     {
         backNode = temp;
         if (ke > temp.getKey()) temp = temp->getRight();
         else if (ke <= temp.getKey() ) temp = temp->getLeft();
     }
 
-    if (temp == nullptr)
+    if (temp == NULL)
     {
         cout << "did not find the node to be deleted" << endl;
         return;
@@ -253,7 +254,7 @@ void BinaryTree<T,K>:: deleteNode(T ke)
         if (temp == root)
         {
             delNode = root;
-            delParent = nullptr;
+            delParent = NULL;
         }
 
         else
@@ -264,11 +265,11 @@ void BinaryTree<T,K>:: deleteNode(T ke)
     }
 
     // Case 1: 0 or Right Child only
-    if (delNode->getLeft() == nullptr)
+    if (delNode->getLeft() == NULL)
     {
-            if (delParent == nullptr)
+            if (delParent == NULL)
             {
-                root = detNode->getRight();
+                root = delNode->getRight();
                 delete delNode;
                 return;
             }
@@ -285,12 +286,12 @@ void BinaryTree<T,K>:: deleteNode(T ke)
     }
 
     //  Case 2: 0 or Left Child only
-    if (delNode->getRight() == nullptr)
+    if (delNode->getRight() == NULL)
     {
-        if (delParent == nullptr)
+        if (delParent == NULL)
         {
             root = delNode->getLeft();
-            delete delnode;
+            delete delNode;
             return;
         }
 
@@ -316,7 +317,7 @@ void BinaryTree<T,K>:: deleteNode(T ke)
         temp = delNode->getLeft();
         backNode = delNode;
 
-        while (temp->getRight() != nullptr)
+        while (temp->getRight() != NULL)
         {
 
             backNode = temp;
@@ -346,15 +347,16 @@ Node<T,K> * BinaryTree<T,K>::findNode(T ke)
     Node<T,K> * temp;
     temp = root;
 
-    while (temp!=nullptr && temp->getKey() != ke)
+    while (temp!=NULL && temp->getKey() != ke)
     {
         if (ke <temp->getKey()) temp = temp->getLeft();
         else temp = temp->getRight();
     }
 
-    if (temp == nullptr) {
-            cout " couldnt find node in the tree" << endl;
-            return nullptr;
+    if (temp == NULL) {
+            cout << " couldnt find node in the tree" << endl;
+            return NULL;
+    }
 
     else return temp;
 
@@ -369,7 +371,7 @@ void BinaryTree<T,K>:: printData(Node<T,K> * nod)
 template <class T, class K>
 void BinaryTree<T,K>:: printSubTree(Node<T,K> * node)
 {
-    if (node != nullptr)
+    if (node != NULL)
     {
         printTree(node->getLeft());
         printData(node);
